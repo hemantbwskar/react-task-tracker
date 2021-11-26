@@ -1,23 +1,31 @@
 import React from "react";
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Header from "./components/Header";
 import Tasks from "./components/Tasks";
 import AddTask from "./components/AddTask";
 import ReactDateTimePicker from "react-datepicker";
 
 function App() {
-  const[tasks,setTasks]=useState(
-    [
-    
-    {
-    id:1,
-    text: 'Today',
-    day: new Date(),
-    reminder: true
-    },
-    
-]
-)
+  const[showAddtasks,setShowAddTask]=useState(false)
+
+  const[tasks,setTasks]=useState([])
+
+  useEffect(()=>{
+    const getTasks=async()=>{
+      const tasksFromServer = await fetchTasks()
+      setTasks(tasksFromServer)
+    }
+
+    getTasks()
+  },[])
+
+  // fetch tasks
+  const fetchTasks=async()=>{
+    const res = await fetch('http://localhost:3000/tasks')
+    const data = await res.json()
+    // console.log(data)
+    return data
+  }
 
 //Add task
 const addTask=(task)=>{
@@ -29,7 +37,11 @@ const addTask=(task)=>{
 
 
 //delete task
-const deleteTask=(id)=>{
+const deleteTask=async(id)=>{
+await fetch('http://localhost:3000/tasks/${id}',
+{
+  method: 'DELETE',
+})
   // console.log('delete',id)
   setTasks(tasks.filter((task)=>task.id !==id))
 }
@@ -46,8 +58,11 @@ const toggleReminder = (id)=>{
   // const x = true
   return (
     <div className='container'>
-     <Header title='Task Tracker'/>
-     <AddTask onAdd={addTask}/>
+     <Header onAdd={()=>setShowAddTask(!showAddtasks)}
+     showAdd={showAddtasks}
+    //  title='Task Tracker'
+    />
+     {showAddtasks && <AddTask onAdd={addTask}/>}
      {tasks.length >0 ? (<Tasks tasks={tasks} onDelete=
      {deleteTask} onToggle={toggleReminder}/>
      ) : (
