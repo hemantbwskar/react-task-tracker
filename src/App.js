@@ -3,28 +3,19 @@ import { useState } from "react"
 import Header from "./components/Header";
 import Tasks from "./components/Tasks";
 import AddTask from "./components/AddTask";
+import ReactDateTimePicker from "react-datepicker";
 
 function App() {
   const[tasks,setTasks]=useState(
     [
+    
     {
     id:1,
-    text: 'Doctors appointment',
-    day: 'July 10th at 3:00pm',
+    text: 'Today',
+    day: new Date(),
     reminder: true
     },
-    {
-    id:2,
-    text: 'Meeting',
-    day: 'July 10th at 4:00pm',
-    reminder: true
-    },
-    {
-    id:3,
-    text: 'Shopping',
-    day: 'July 10th at 5:00pm',
-    reminder: false
-    },
+    
 ]
 )
 
