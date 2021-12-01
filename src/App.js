@@ -26,14 +26,14 @@ function App() {
     
 // fetch data
   const fetchTasks=async()=>{
-    const res = await fetch('https://polar-badlands-57668.herokuapp.com//tasks')
+    const res = await fetch('https://polar-badlands-57668.herokuapp.com/tasks')
     const data = await res.json()
     // console.log(data)
     return data
   }
 
   const fetchTask=async(id)=>{
-    const res = await fetch('https://polar-badlands-57668.herokuapp.com//tasks/'+id)
+    const res = await fetch('https://polar-badlands-57668.herokuapp.com/tasks/'+id)
     const data = await res.json()
     // console.log(data)
     return data
@@ -42,7 +42,7 @@ function App() {
 
 //Add task
 const addTask=async(task)=>{
-const res =await fetch('https://polar-badlands-57668.herokuapp.com//tasks',{
+const res =await fetch('https://polar-badlands-57668.herokuapp.com/tasks',{
   method: 'POST',
   headers:{
     'Content-type':'application/json'
@@ -63,7 +63,7 @@ setTasks([...tasks, data])
 
 //delete task
 const deleteTask=async(id)=>{
-await fetch('https://polar-badlands-57668.herokuapp.com//tasks/'+id,
+await fetch('https://polar-badlands-57668.herokuapp.com/tasks/'+id,
 {
   method: 'DELETE',
 })
@@ -76,7 +76,7 @@ const toggleReminder =async (id)=>{
 const taskToToggle=await fetchTask(id)
 const updTask={...taskToToggle,reminder: !taskToToggle.reminder}
 
-const res = await fetch('https://polar-badlands-57668.herokuapp.com//tasks/'+id,
+const res = await fetch('https://polar-badlands-57668.herokuapp.com/tasks/'+id,
 {
   method: 'PUT',
   headers:{
