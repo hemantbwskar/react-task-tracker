@@ -5,8 +5,10 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Tasks from "./components/Tasks";
 import AddTask from "./components/AddTask";
-import About from "./components/About";
-import ReactDateTimePicker from "react-datepicker";
+// import About from "./components/About";
+// import ReactDateTimePicker from "react-datepicker";
+import { Auth0Provider } from "@auth0/auth0-react"
+import LoginButton from "./components/LoginButton";
 
 function App() {
   const[showAddtasks,setShowAddTask]=useState(false)
@@ -96,8 +98,15 @@ const data= await res.json()
   // const name = 'Hemant'
   // const x = true
   return (
+    <Auth0Provider
+    domain="hemantbwskar.us.auth0.com"
+    clientId="mAmNxt8didKYDLL3EtS2eRVxamkhGlKl"
+    redirectUri={window.location.origin}
+  >
+    
     <Router>
     <div className='container'>
+      <LoginButton />
      <Header onAdd={()=>setShowAddTask(!showAddtasks)}
      showAdd={showAddtasks}
     //  title='Task Tracker'
@@ -117,7 +126,7 @@ const data= await res.json()
       <Footer/>
     </div>
     </Router>
-    
+    </Auth0Provider>
   );
 }
 
