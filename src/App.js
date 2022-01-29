@@ -10,6 +10,7 @@ import AddTask from "./components/AddTask";
 import { Auth0Provider } from "@auth0/auth0-react"
 import LoginButton from "./components/LoginButton";
 
+
 function App() {
   const[showAddtasks,setShowAddTask]=useState(false)
 
@@ -26,16 +27,19 @@ function App() {
     getTasks()
   },[])
     
+  const API='http://localhost:5000/'
 // fetch data
   const fetchTasks=async()=>{
-    const res = await fetch('https://polar-badlands-57668.herokuapp.com/tasks')
+
+    
+    const res = await fetch(API)
     const data = await res.json()
-    // console.log(data)
+    console.log(data)
     return data
   }
 
   const fetchTask=async(id)=>{
-    const res = await fetch('https://polar-badlands-57668.herokuapp.com/tasks/'+id)
+    const res = await fetch(API+id)
     const data = await res.json()
     // console.log(data)
     return data
@@ -43,23 +47,16 @@ function App() {
   
 
 //Add task
+const data=null
 const addTask=async(task)=>{
-const res =await fetch('https://polar-badlands-57668.herokuapp.com/tasks',{
+  const res = {
   method: 'POST',
-  headers:{
-    'Content-type':'application/json'
-  },
-  body:JSON.stringify(task)
-})
-
-const data=await res.json()
-
-setTasks([...tasks, data])
-  // const id=Math.floor(Math.random()*10000)+1
-
-  // const newTask = {id,...task}
-  // setTasks([...tasks,newTask])  
-  // console.log(task)
+  headers:{'Content-type':'application/json'},
+  body:JSON.stringify(task)  
+};
+fetch(API+'addtask',res)
+.then(data=await res.json())
+.then(setTasks([...tasks, data]))
 }
 
 
